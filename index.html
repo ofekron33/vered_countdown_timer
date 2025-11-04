@@ -35,34 +35,14 @@
     </div>
   </main>
 
-  <!-- Hug overlay -->
-  <div class="hug-overlay" id="hugOverlay" aria-hidden="true">
-    <div class="hug-scene" id="hugScene">
-      <div class="hug-pair">
-        <div class="hug-char left">
-          <div class="bubble"></div>
-          <div class="arm arm-l"></div>
-          <div class="arm arm-r"></div>
-          <div class="face">
-            <span class="eye"></span><span class="eye"></span>
-            <span class="smile"></span>
-          </div>
-        </div>
-        <div class="hug-char right">
-          <div class="bubble"></div>
-          <div class="arm arm-l"></div>
-          <div class="arm arm-r"></div>
-          <div class="face">
-            <span class="eye"></span><span class="eye"></span>
-            <span class="smile"></span>
-          </div>
-        </div>
-      </div>
-      <div class="sparkles" aria-hidden="true"></div>
-      <button class="hug-close" id="hugClose" type="button" aria-label="Close">×</button>
-      <div class="hug-caption">Long hug loading… 💙</div>
-    </div>
+<!-- Hug overlay -->
+<div class="hug-overlay" id="hugOverlay" aria-hidden="true">
+  <div class="hug-scene" id="hugScene">
+    <div id="lottieHug" class="lottie-hug" aria-label="Hug animation"></div>
+    <div class="hug-caption">Long hug loading… 💙</div>
+    <button class="hug-close" id="hugClose" type="button" aria-label="Close">×</button>
   </div>
+</div>
 
   <noscript>
     <style>.card{max-width:760px;margin:10vh auto}</style>
