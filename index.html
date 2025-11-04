@@ -1,185 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Until I see Vered again 💙</title>
-<style>
-:root{
-  --ink:#eef6ff; --muted:#a9c5dd;
-  --sky1:#071225; --sky2:#0e2450; --sky3:#153a7a; --sky4:#2c5aa3; /* deep night → dawn */
-  --ocean1:#0a2342; --ocean2:#0e2f59; --ocean3:#123a6e;
-  --glow:#7fc6ff; --beam:#8ec5ff55;
-}
-*{box-sizing:border-box} html,body{height:100%}
-body{
-  margin:0;color:var(--ink);
-  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
-  background: linear-gradient(180deg,var(--sky2),var(--sky1));
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-}
-
-/* === SKY LAYERS === */
-.sky{
-  position:fixed; inset:0; z-index:0;
-  background:
-    radial-gradient(1200px 900px at 78% 12%, var(--sky3), transparent 60%),
-    radial-gradient(1100px 820px at 18% 88%, #122a57, transparent 60%),
-    linear-gradient(180deg, var(--sky2), var(--sky1));
-  animation: skyshift 20s ease-in-out infinite alternate;
-}
-@keyframes skyshift{
-  0%{ filter:hue-rotate(0deg) brightness(1) }
-  100%{ filter:hue-rotate(8deg) brightness(1.08) }
-}
-
-/* drifting festival lights */
-.lights,.lights:after{
-  content:""; position:fixed; inset:-40%;
-  background:
-    radial-gradient(1.8px 1.8px at 18% 28%, #fff7, transparent 36%),
-    radial-gradient(1.8px 1.8px at 66% 18%, #fff6, transparent 36%),
-    radial-gradient(1.5px 1.5px at 42% 82%, #fff6, transparent 36%),
-    radial-gradient(1.8px 1.8px at 84% 62%, #fff5, transparent 36%),
-    radial-gradient(1.5px 1.5px at 52% 54%, #fff5, transparent 36%);
-  animation: drift 80s linear infinite; opacity:.35; pointer-events:none;
-}
-.lights:after{ animation-duration:110s; opacity:.25; filter:blur(.5px) }
-@keyframes drift{ to{ transform: translate3d(5%,-5%,0) } }
-
-/* festival beams on horizon */
-.beams{
-  position:fixed; inset:auto 0 26vh 0; height:26vh; z-index:0; pointer-events:none;
-  background:
-    linear-gradient(72deg, transparent 0 35%, var(--beam) 48%, transparent 60%),
-    linear-gradient(110deg, transparent 0 40%, var(--beam) 52%, transparent 64%),
-    linear-gradient(140deg, transparent 0 42%, var(--beam) 55%, transparent 67%);
-  mix-blend-mode:screen; opacity:.35; filter:blur(1px);
-  animation: beamfade 6s ease-in-out infinite alternate;
-}
-@keyframes beamfade{ from{opacity:.22} to{opacity:.42} }
-
-/* top mountains (parallax silhouette) */
-.mountains{
-  position:fixed; inset:0 0 auto 0; height:34vh; z-index:0; opacity:.45;
-  background:
-    linear-gradient(0deg, transparent 0 55%, #0c1a33 56% 100%);
-  -webkit-mask:
-    radial-gradient(1200px 360px at 18% 82%, #000 56%, transparent 57%),
-    radial-gradient(1000px 320px at 58% 92%, #000 56%, transparent 57%),
-    radial-gradient(700px 300px  at 95% 86%, #000 56%, transparent 57%);
-          mask-composite: exclude;
-}
-
-/* airplane (travel) */
-.plane{
-  position:fixed; top:9vh; left:-12vw; width:60px; height:60px; z-index:1; opacity:.85;
-  background:
-     radial-gradient(10px 10px at 25% 50%, #fff, #cfe8ff 60%, transparent 61%),
-     linear-gradient(90deg, #cfe8ff 0 45%, transparent 46%),
-     linear-gradient(60deg, transparent 0 50%, #eaf4ff 51% 70%, transparent 71%),
-     linear-gradient(-60deg, transparent 0 50%, #eaf4ff 51% 70%, transparent 71%);
-  clip-path: polygon(0 45%, 55% 45%, 100% 50%, 55% 55%, 0 55%, 15% 50%);
-  filter: drop-shadow(0 0 10px #bfe0ff);
-  animation: fly 22s linear infinite;
-}
-@keyframes fly{
-  0%{ transform: translateX(0) translateY(0) rotate(3deg) }
-  50%{ transform: translateX(80vw) translateY(3vh) rotate(2deg) }
-  100%{ transform: translateX(120vw) translateY(0) rotate(3deg) }
-}
-
-/* ocean waves (3 layers) */
-.waves{ position:fixed; inset:auto 0 0 0; height:28vh; z-index:0; }
-.wave{
-  position:absolute; left:-150%; right:-150%; height:50%;
-  background: radial-gradient(900px 140px at 50% 0, var(--ocean3) 18%, var(--ocean2) 62%, transparent 64%);
-  animation: roll 20s linear infinite; opacity:.85;
-}
-.wave.w2{ top:18%; opacity:.6; filter:blur(1.5px); animation-duration:28s }
-.wave.w3{ top:34%; opacity:.38; filter:blur(2.5px); animation-duration:36s }
-@keyframes roll{ to{ transform: translateX(50%) } }
-
-/* === CARD === */
-.card{
-  position:relative; z-index:2; width:min(840px,100%); text-align:center;
-  padding:40px 26px 28px; border-radius:26px;
-  background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
-  backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow: 0 22px 70px rgba(0,0,0,.5);
-}
-.title{
-  margin:0 0 8px; font-weight:900; letter-spacing:.2px;
-  font-size:clamp(1.9rem,5.2vw,3rem); position:relative;
-}
-.title .heart{
-  position:absolute; inset:auto auto -10px 50%; width:96px; height:96px; margin-left:-48px; opacity:.18;
-  filter: drop-shadow(0 0 12px rgba(127,198,255,.6));
-  background:
-    radial-gradient(circle at 35% 40%, var(--glow), transparent 45%),
-    radial-gradient(circle at 65% 40%, var(--glow), transparent 45%),
-    radial-gradient(140px 100px at 50% 90%, var(--glow), transparent 60%);
-  transform: translateY(-8px) rotate(-45deg); border-radius:8px;
-  clip-path: polygon(0 35%, 35% 0, 50% 12%, 65% 0, 100% 35%, 50% 100%);
-}
-.when{ color:var(--muted); font-size:1rem; margin-bottom:22px }
-
-/* digits */
-.digits{ display:flex; justify-content:center; align-items:baseline; gap:20px; font-variant-numeric:tabular-nums }
-.block{
-  min-width:128px; padding:14px 16px;
-  background: rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:18px; box-shadow: inset 0 0 42px rgba(0,0,0,.28);
-}
-.num{ font-size:clamp(2.6rem,8.2vw,4.2rem); font-weight:900; line-height:1 }
-.unit{ margin-top:7px; font-size:.92rem; color:var(--muted) }
-.sep{
-  width:10px; height:10px; border-radius:50%;
-  background:#ffffff90; align-self:center; margin:0 2px;
-  box-shadow: 0 12px 0 #ffffff55;
-}
-
-.meta{ margin-top:16px; color:var(--muted); font-size:.94rem }
-.actions{ margin-top:14px }
-.btn{
-  display:inline-block; padding:10px 14px; margin:0 6px;
-  border-radius:12px; border:1px solid rgba(255,255,255,.16);
-  color:var(--ink); text-decoration:none;
-  background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-}
-
-/* shooting star for a little magic */
-.shooting{
-  position:fixed; top:16vh; left:70vw; width:2px; height:2px; background:#fff; z-index:1; opacity:.9;
-  box-shadow: 0 0 14px #fff, 0 0 30px #9fd0ff;
-  transform: rotate(-20deg);
-  animation: shoot 5.5s ease-in-out infinite 2s;
-}
-@keyframes shoot{
-  0%{ transform: translate(0,0) rotate(-20deg); opacity:0 }
-  10%{ opacity:1 }
-  60%{ transform: translate(-40vw, 20vh) rotate(-20deg); opacity:.6 }
-  100%{ opacity:0 }
-}
-
-.done{ color:#c9ffd8; font-weight:800 }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Until I see Vered again 💙</title>
+  <meta name="description" content="A cinematic, animated countdown for Vered: ocean waves, mountains, festival lights & airplane.">
+  <link rel="preload" href="./styles/main.css" as="style">
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
-  <div class="sky"></div>
-  <div class="lights"></div>
-  <div class="beams"></div>
-  <div class="mountains"></div>
-  <div class="plane" aria-hidden="true"></div>
-  <div class="shooting" aria-hidden="true"></div>
+  <!-- Cinematic backdrop -->
+  <canvas id="scene" aria-hidden="true"></canvas>
 
-  <main class="card">
-    <h1 class="title" id="title">Until I see Vered again 💙<span class="heart" aria-hidden="true"></span></h1>
-    <div class="when" id="whenText"></div>
+  <!-- UI card -->
+  <main class="card" role="main" aria-live="polite">
+    <h1 class="title"><span id="label">Until I see Vered again 💙</span></h1>
+    <p class="when" id="whenText"></p>
 
-    <div class="digits" aria-label="time remaining">
+    <section class="digits" aria-label="time remaining">
       <div class="block"><div class="num" id="d">0</div><div class="unit">Days</div></div>
       <div class="sep"></div>
       <div class="block"><div class="num" id="h">00</div><div class="unit">Hours</div></div>
@@ -187,88 +25,50 @@ body{
       <div class="block"><div class="num" id="m">00</div><div class="unit">Minutes</div></div>
       <div class="sep"></div>
       <div class="block"><div class="num" id="s">00</div><div class="unit">Seconds</div></div>
-    </div>
+    </section>
 
-    <div class="meta" id="tzInfo"></div>
+    <p class="meta" id="tzInfo"></p>
     <div class="actions">
       <a class="btn" id="share" href="#">Share</a>
       <a class="btn" id="copy" href="#">Copy link</a>
+      <button class="btn primary" id="hugBtn" type="button">Hug mode 🤗</button>
     </div>
   </main>
 
-  <div class="waves">
-    <div class="wave"></div>
-    <div class="wave w2"></div>
-    <div class="wave w3"></div>
+  <!-- Hug overlay -->
+  <div class="hug-overlay" id="hugOverlay" aria-hidden="true">
+    <div class="hug-scene" id="hugScene">
+      <div class="hug-pair">
+        <div class="hug-char left">
+          <div class="bubble"></div>
+          <div class="arm arm-l"></div>
+          <div class="arm arm-r"></div>
+          <div class="face">
+            <span class="eye"></span><span class="eye"></span>
+            <span class="smile"></span>
+          </div>
+        </div>
+        <div class="hug-char right">
+          <div class="bubble"></div>
+          <div class="arm arm-l"></div>
+          <div class="arm arm-r"></div>
+          <div class="face">
+            <span class="eye"></span><span class="eye"></span>
+            <span class="smile"></span>
+          </div>
+        </div>
+      </div>
+      <div class="sparkles" aria-hidden="true"></div>
+      <button class="hug-close" id="hugClose" type="button" aria-label="Close">×</button>
+      <div class="hug-caption">Long hug loading… 💙</div>
+    </div>
   </div>
 
-<script>
-(()=> {
-  const qs = new URLSearchParams(location.search);
-  const label = qs.get("label") || "Until I see Vered again 💙";
-  document.title = label.replace("💙","").trim();
-  document.getElementById("title").firstChild.nodeValue = label + " ";
+  <noscript>
+    <style>.card{max-width:760px;margin:10vh auto}</style>
+    JavaScript is required for the countdown and animations.
+  </noscript>
 
-  const now = new Date();
-  let target = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 20, 0, 0, 0);
-  const raw = qs.get("time");
-  if (raw) {
-    const normalized = raw.includes(" ") ? raw.replace(" ", "T") : raw;
-    const tryISO = new Date(normalized);
-    if (!isNaN(tryISO)) target = tryISO;
-    else {
-      const m = normalized.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
-      if (m) target = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], m[6]?+m[6]:0, 0);
-    }
-  }
-
-  document.getElementById("whenText").textContent =
-    new Intl.DateTimeFormat(undefined, {dateStyle:"full", timeStyle:"short"}).format(target);
-
-  const offMin = -target.getTimezoneOffset();
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Local time";
-  const sign = offMin>=0?"+":"-";
-  const hh = String(Math.floor(Math.abs(offMin)/60)).padStart(2,"0");
-  const mm = String(Math.abs(offMin)%60).padStart(2,"0");
-  document.getElementById("tzInfo").textContent = `${tz} • UTC${sign}${hh}:${mm}`;
-
-  const $ = id => document.getElementById(id);
-  function tick(){
-    const now = new Date();
-    let diff = target - now; if (diff < 0) diff = 0;
-    const s = Math.floor(diff/1000) % 60;
-    const m = Math.floor(diff/60000) % 60;
-    const h = Math.floor(diff/3600000) % 24;
-    const d = Math.floor(diff/86400000);
-    $("d").textContent = d; $("h").textContent = String(h).padStart(2,"0");
-    $("m").textContent = String(m).padStart(2,"0"); $("s").textContent = String(s).padStart(2,"0");
-    if (diff === 0) { document.getElementById("whenText").innerHTML = '<span class="done">It’s time ✨</span>'; clearInterval(timer); confetti(); }
-  }
-  const timer = setInterval(tick, 250); tick();
-
-  function confetti(){
-    const n = 150;
-    for(let i=0;i<n;i++){
-      const p = document.createElement('div');
-      p.style.position='fixed'; p.style.left = Math.random()*100 + 'vw'; p.style.top = '-10px';
-      p.style.width = p.style.height = (4+Math.random()*6)+'px';
-      p.style.background = ['#7fc6ff','#ffffff','#b3e5ff','#d9ecff'][i%4];
-      p.style.opacity = .95; p.style.zIndex = 9999; p.style.transform = `rotate(${Math.random()*360}deg)`;
-      document.body.appendChild(p);
-      const dur = 2400 + Math.random()*2600; const endTop = innerHeight + 20;
-      p.animate([{transform:'translateY(0) rotate(0deg)'},{transform:`translateY(${endTop}px) rotate(${360+Math.random()*240}deg)`}],{duration:dur,easing:'cubic-bezier(.2,.7,.2,1)'}).onfinish = ()=> p.remove();
-    }
-  }
-
-  const shareBtn = document.getElementById('share');
-  const copyBtn = document.getElementById('copy');
-  const shareUrl = location.origin + location.pathname +
-    `?time=${encodeURIComponent(target.toISOString().slice(0,19))}%2B${hh}:${mm}` +
-    `&label=${encodeURIComponent(label)}`;
-  shareBtn.href = shareUrl;
-  shareBtn.addEventListener('click', e => { if (navigator.share) { e.preventDefault(); navigator.share({title:label, url:shareUrl}); } });
-  copyBtn.addEventListener('click', e => { e.preventDefault(); navigator.clipboard?.writeText(shareUrl).then(()=>{ copyBtn.textContent="Copied ✔"; setTimeout(()=> copyBtn.textContent="Copy link",1500); }); });
-})();
-</script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
