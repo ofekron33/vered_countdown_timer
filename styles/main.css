@@ -104,3 +104,36 @@ body{
   background: rgba(0,0,0,.25); color:#fff; font-size:20px; line-height:32px; cursor:pointer
 }
 .hug-close:hover{ background: rgba(0,0,0,.35) }
+
+/* iPhone fix: allow wrapping + scale down on narrow screens */
+html { -webkit-text-size-adjust: 100%; }
+
+@media (max-width: 480px) {
+  .card{ padding:28px 16px; }
+
+  /* switch from one long row to a 2×2 grid */
+  .digits{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:12px 10px;           /* rows × columns */
+    justify-items: stretch;
+    align-items: stretch;
+  }
+  .sep{ display:none; }      /* hide the dot separators on mobile */
+  .block{
+    min-width:0;             /* let blocks shrink */
+    padding:12px 10px;       /* tighter padding */
+  }
+  .num{ font-size: clamp(1.9rem, 10vw, 2.6rem); }
+  .unit{ font-size: .85rem; }
+  .title{ font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .when, .meta{ font-size: .92rem; }
+}
+
+@media (max-width: 340px) {
+  /* ultra-narrow: stack 4 rows */
+  .digits{
+    grid-template-columns: 1fr;
+    gap:10px;
+  }
+}
