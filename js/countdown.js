@@ -1,6 +1,11 @@
-export function computeDefaultTarget() {
+export function computeDefaultTarget(hour = 20, minute = 0) {
   const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 20, 0, 0, 0);
+  const target = new Date(
+    now.getFullYear(), now.getMonth(), now.getDate(),
+    hour, minute, 0, 0
+  );
+  if (now > target) target.setDate(target.getDate() + 1); // if it's already past 20:00, use tomorrow
+  return target;
 }
 
 export function parseTargetFromQS(qs) {
